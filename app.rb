@@ -6,9 +6,8 @@ class Server < Sinatra::Base
 
     
     get '/api/busses' do
-        @busses = Trafiklabs.get(5)
-
-        slim :index
+        # content_type :json
+        return Trafiklabs.get(5).to_json
     end
 
 
