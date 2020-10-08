@@ -34,3 +34,10 @@ async function renderBussData() {
     document.querySelector(".wrapper").appendChild(bussBox)
 
 }
+
+async function renderWeatherData() {
+    const response = await fetch(`http://localhost:9292/api/weather`);
+    const result = await (response.json());
+
+
+}

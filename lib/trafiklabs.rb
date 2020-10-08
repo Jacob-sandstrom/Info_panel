@@ -1,5 +1,3 @@
-require 'httparty'
-
 class Trafiklabs
 
     # formats the data from the api 
@@ -40,23 +38,21 @@ class Trafiklabs
     #
     #  => {name: "Svart", dep_time: "12:32:00", stops: [{name: "Backvägen (Göteborg kn)", id: "740068184", arr_time: "12:35:00"}, ...]}
     #
-    # outp => {name: "name", dep_time: time of departure from vallhamra, stops: [{name: name of stop, id: id of stop, arr_time: time of arrival to stop}, ...]}
-    def self.format_response(response)
+    # outp => [{name: "name", dep_time: time of departure from vallhamra, stops: [{name: name of stop, id: id of stop, arr_time: time of arrival to stop}, ...]}, ...]
+    def self.format_with_stops(response)
         return response["Departure"].map {|buss| {name: buss["Product"]["num"], dep_time: buss["Stops"]["Stop"][0]["depTime"], stops: buss["Stops"]["Stop"][1..-1].map { |stop| {name: stop["name"], id: stop["id"], arr_time: stop["arrTime"]}}}}
     end
 
     #   onle contains the name and time of departure for each buss
-    def self.lesser_format(response)
+    #   outp => [{name: "name", dep_time: dep_time}, ...]
+    def self.format(response)
         return response["Departure"].map {|buss| {name: buss["Product"]["num"], dep_time: buss["Stops"]["Stop"][0]["depTime"]}}
     end
 
-    # sends the api request and return n journeys formated with format_response()
+    # sends the api request and return n journeys formated with format(response)
     def self.get(max_journeys = 5, destination = 740015597)
         response = HTTParty.get("https://api.resrobot.se/v2/departureBoard?key=dc6277a9-744a-4bae-96b5-54bca1f84b88&id=740015681&direction=#{destination}&maxJourneys=#{max_journeys}&format=json")
-        # return format_response(response)
-        return lesser_format(response)
+        return format(response)
     end
 
 end
-
-p Trafiklabs.get()

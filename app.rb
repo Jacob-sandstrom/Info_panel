@@ -6,8 +6,11 @@ class Server < Sinatra::Base
 
     
     get '/api/busses' do
-        # content_type :json
-        return Trafiklabs.get(5).to_json
+        Trafiklabs.get(5).to_json
+    end
+
+    get '/api/weather' do
+        Smhi.get().to_json
     end
 
 
