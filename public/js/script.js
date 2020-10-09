@@ -26,20 +26,34 @@ async function renderWeatherData() {
     const response = await fetch(`http://localhost:9292/api/weather`);
     const result = await (response.json());
 
-    weatherBox = createElement("div")
+    weatherBox = document.createElement("div")
     weatherBox.classList.add("weatherBox")
-    for (const element of result) {
-        const template = document.querySelector('#weatherTemplate');
-        const weather = template.content.cloneNode(true).querySelector('.weather');
+    for (const day of result) {
 
-        weather.querySelector(".time").innerHTML = element["dateTime"]
-        weather.querySelector(".temperature").innerHTML = element["params"]["t"]
-        weather.querySelector(".weatherSymbol").innerHTML = element["params"]["Wsymb2"]
-        weather.querySelector(".windDirection").innerHTML = element["params"]["wd"]
-        weather.querySelector(".windSpeed").innerHTML = element["params"]["ws"]
-        weather.querySelector(".gust").innerHTML = element["params"]["gust"]
+        dayWeather = document.createElement("div")
+        dayWeather.classList.add("dayWeather")
 
-        weatherBox.appendChild(weather)
+        date = document.createElement("div")
+        date.classList.add("date")
+        date.innerHTML = day["date"]
+        weatherBox.appendChild(date)
+
+        for (const element of day["times"]) {
+            const template = document.querySelector('#weatherTemplate');
+            const weather = template.content.cloneNode(true).querySelector('.weather');
+
+            weather.querySelector(".time").innerHTML = element["dateTime"]
+            weather.querySelector(".temperature").innerHTML = `${element["t"]}°C`
+            weather.querySelector(".weatherSymbol").src = `./img/weather/${element["Wsymb2"][0]}.svg`
+                // weather.querySelector(".windDirection").src = `./img/arrow.svg`
+                // weather.querySelector(".windDirection").style.transform = `rotate(${element["wd"] + 90}deg)`
+            weather.querySelector(".windSpeed").innerHTML = `${element["ws"]} m/s`
+            weather.querySelector(".gust").innerHTML = `(${element["gust"]})`
+
+            dayWeather.appendChild(weather)
+        }
+        weatherBox.appendChild(dayWeather)
     }
-    document.querySelector(".wrapper").appendChild(bussBox)
+
+    document.querySelector(".wrapper").appendChild(weatherBox)
 }

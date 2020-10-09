@@ -1,16 +1,16 @@
 
 
 template id="bussTemplate"
-    article.buss
-        .bussName
-        .bussDepTime
+    article.buss.elemBox
+        .bussName.bussElem.elem
+        .bussDepTime.bussElem.elem
 
 
 template id="weatherTemplate"
-    article.weather
-        .time
-        .temperature
-        img.weatherSymbol
-        .windDirection
-        .windSpeed
-        .gust
+    article.weather.elemBox
+        .time.weatherElem.elem
+        .temperature.weatherElem.elem
+        img.weatherSymbol.weatherElem.elem
+        .windSpeed.weatherElem.elem
+        / img.windDirection.weatherElem.elem
+        .gust.weatherElem.elem
