@@ -13,6 +13,10 @@ class Server < Sinatra::Base
         Smhi.get().to_json
     end
 
+    get '/api/calendar' do
+        CalendarHandler.
+    end
+
 
 
   end
