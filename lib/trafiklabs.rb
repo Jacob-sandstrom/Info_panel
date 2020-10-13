@@ -46,7 +46,7 @@ class Trafiklabs
     #   onle contains the name and time of departure for each buss
     #   outp => [{name: "name", dep_time: dep_time}, ...]
     def self.format(response)
-        return response["Departure"].map {|buss| {name: buss["Product"]["num"], dep_time: buss["Stops"]["Stop"][0]["depTime"]}}
+        return response["Departure"].map {|buss| {name: buss["Product"]["num"], dep_time: buss["Stops"]["Stop"][0]["depTime"][0..-4]}}
     end
 
     # sends the api request and return n journeys formated with format(response)

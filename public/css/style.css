@@ -5,15 +5,59 @@ body {
 
 .wrapper {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 2fr;
+    grid-template-areas: "head head" "buss weather";
 }
 
-.weatherBox {}
-
 .elemBox {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     /* display: flex; */
+}
+
+.date,
+.bussHeader {
+    margin: 5px;
+}
+
+.weather,
+.busses {
+    display: grid;
+    grid-auto-rows: 30px;
+}
+
+.box {
+    border: 2px solid white;
+}
+
+.weatherBox {
+    grid-area: weather;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* grid-template-areas: "date date" "weather weather"; */
+}
+
+.bussBox {
+    grid-area: buss;
+}
+
+.elem {
+    /* margin: 5px; */
+    display: flex;
+    align-items: center;
+}
+
+.weatherElem {
+    justify-content: center;
+}
+
+.bussElem {}
+
+.weather {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.buss {
+    display: grid;
+    grid-template-columns: 50px auto;
 }
 
 .elem {
