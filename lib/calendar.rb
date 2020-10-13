@@ -10,12 +10,12 @@ class Calendar
         # The file token.yaml stores the user's access and refresh tokens, and is
         # created automatically when the authorization flow completes for the first
         # time.
-        @token_path = "../google/token_#{account}.yaml".freeze
+        @token_path = "google/token_#{account}.yaml".freeze
         
         init_api()
     end
     
-    CREDENTIALS_PATH = "../google/credentials.json".freeze
+    CREDENTIALS_PATH = "google/credentials.json".freeze
     OOB_URI = "urn:ietf:wg:oauth:2.0:oob".freeze
     APPLICATION_NAME = "Google Calendar API Ruby Quickstart".freeze
     SCOPE = Google::Apis::CalendarV3::AUTH_CALENDAR_READONLY
@@ -137,5 +137,3 @@ class CalendarHandler
         events
     end
 end
-
-CalendarHandler.get()[0]
