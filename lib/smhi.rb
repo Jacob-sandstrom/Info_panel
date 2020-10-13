@@ -7,6 +7,15 @@ class Smhi
         "gust"
     ]
 
+    @@times_to_display = [
+        " 2:00",
+        " 6:00",
+        "10:00",
+        "14:00",
+        "18:00",
+        "22:00"
+    ]
+
     # change the time from utc to cest
     def self.update_time(response)
         response.each do |date_time|
@@ -28,9 +37,13 @@ class Smhi
             temp = {date: date, times: response.clone.map(&:clone).select {|x| x[:dateTime].strftime("%Y-%m-%d") == date}}
             temp[:times].each {|x| x[:dateTime] = x[:dateTime].strftime("%k:%M") }
             days << temp
-            # days[date] = response.clone.map(&:clone).select {|x| x[:dateTime].strftime("%Y-%m-%d") == date}
-            # days[date].each {|x| x[:dateTime] = x[:dateTime].strftime("%k:%M") }
         end
+        days
+    end
+
+    def self.limit_data(response, num_days = 2)
+        days = response[0..num_days-1]
+        days.each {|day| day[:times] = day[:times].select {|h| @@times_to_display.include?(h[:dateTime])}}
         days
     end
 
@@ -53,11 +66,9 @@ class Smhi
 
         temp = update_time(temp)
         temp = sort_into_days(temp)
-
-
+        temp = limit_data(temp)
 
         temp
-
     end
 
     def self.get()
