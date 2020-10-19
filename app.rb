@@ -14,7 +14,7 @@ class Server < Sinatra::Base
     end
 
     get '/api/calendar' do
-        CalendarHandler.get()
+        CalendarHandler.get().to_json
     end
 
 

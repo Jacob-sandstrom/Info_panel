@@ -125,6 +125,10 @@ class CalendarHandler
         end
     end
 
+    def self.format(events)
+        events.map {|event| {summary: event.summary, start_time: event.start.date_time || event.start.date, end_time: event.end.date_time || event.end}}
+    end
+
 
     def self.get(calendars_to_get = {jojac: ["primary"], te4: ["ga.ntig.se_classroom871f8384@group.calendar.google.com"]})
         calendars = []
@@ -133,7 +137,9 @@ class CalendarHandler
         end
         events = merge_calendars(calendars)
         events = sort_events(events)
-        # print(events)
+        events = format(events)
+        p events[0]
+        
         events
     end
 end
