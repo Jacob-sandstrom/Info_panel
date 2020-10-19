@@ -1,17 +1,45 @@
 
 
+/ template id="bussTemplate"
+/     .buss.elemBox
+/         .bussName.bussElem.elem
+/         .bussDepTime.bussElem.elem
+
+
+/ template id="weatherTemplate"
+/     .weather.elemBox
+/         .time.weatherElem.elem
+/         .temperature.weatherElem.elem
+/         .weatherSymbol.weatherElem.elem
+/             img
+/         .windSpeed.weatherElem.elem
+/         / img.windDirection.weatherElem.elem
+/         .gust.weatherElem.elem
+
+template id="cardTemplate"
+    .card.blue-grey
+        .card-content.white-text
+            .card-title.row 
+
 template id="bussTemplate"
-    article.buss.elemBox
-        .bussName.bussElem.elem
-        .bussDepTime.bussElem.elem
+    .buss.card.blue-grey.darken-3.row.valign-wrapper
+        .bussName.col.s6
+        .bussDepTime.col.s6
+
+
+template id="weatherBoxTemplate"
+    .card.blue-grey.lighten-3  
+        .card-content.white-text
+            .card-title
 
 
 template id="weatherTemplate"
-    article.weather.elemBox
-        .time.weatherElem.elem
-        .temperature.weatherElem.elem
-        .weatherSymbol.weatherElem.elem
-            img
-        .windSpeed.weatherElem.elem
-        / img.windDirection.weatherElem.elem
-        .gust.weatherElem.elem
+    .weather.card.blue-grey.darken-3
+        .row.valign-wrapper
+            .time.col.s3
+            .temperature.col.s2
+            .weatherSymbol.col.s2
+                img
+            .windSpeed.col.s3
+            / img.windDirection.weatherElem.elem
+            .gust.col.s2
