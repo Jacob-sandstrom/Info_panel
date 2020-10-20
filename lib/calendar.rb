@@ -54,21 +54,21 @@ class Calendar
 
 
     #   get start and end time
-    def start_end_date(days = 5)
+    def start_end_date(num_days)
         date_time = DateTime.now
         day = date_time.day
         month = date_time.month
         year = date_time.year
 
         start_date = DateTime.new(year, month, day)
-        end_date = start_date + days
+        end_date = start_date + num_days
         [start_date, end_date]
     end
 
 
     #   send request
-    def get_events(calendar_id = "primary", days = 50)
-        start_date, end_date = start_end_date(days)
+    def get_events(calendar_id = "primary", num_days = 5)
+        start_date, end_date = start_end_date(num_days)
 
         response = @service.list_events(calendar_id,
                                     max_results:   1000,
@@ -125,20 +125,33 @@ class CalendarHandler
         end
     end
 
-    def self.format(events)
-        events.map {|event| {summary: event.summary, start_time: event.start.date_time || event.start.date, end_time: event.end.date_time || event.end}}
+    def self.format(events, days)
+        events = events.map {|event| {summary: event.summary, start_time: event.start.date_time || event.start.date, end_time: event.end.date_time || event.end}}
+        # days.each {|day| day[:events] = events.select {|event| day[:date] == event[:start_time].strftime("%Y-%m-%d")}}
+        events.each do
+            
+        end
     end
 
+    def self.create_event_box(num_days)
+        days = []
+        num_days.times do |i|
+            time = Time.now + (60*60*24*i)
+            days << {date: time.strftime("%Y-%m-%d"), events: []}
+        end
+        days
+    end
 
-    def self.get(calendars_to_get = {jojac: ["primary"], te4: ["ga.ntig.se_classroom871f8384@group.calendar.google.com"]})
+    def self.get(calendars_to_get = {jojac: ["primary"], te4: ["ga.ntig.se_classroom871f8384@group.calendar.google.com"]}, num_days = 5)
         calendars = []
         calendars_to_get.keys.each do |c| 
-            calendars_to_get[c].each { |id| calendars << Calendar.new(c.to_s).get_events(id) } 
+            calendars_to_get[c].each { |id| calendars << Calendar.new(c.to_s).get_events(id, num_days) } 
         end
+        days = create_event_box(num_days)
         events = merge_calendars(calendars)
         events = sort_events(events)
-        events = format(events)
-        p events[0]
+        events = format(events, days)
+        # p events[0]
         
         events
     end
