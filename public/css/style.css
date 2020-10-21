@@ -1,4 +1,4 @@
-body {
+/* body {
     background-color: rgb(42, 42, 42);
     color: white;
 }
@@ -10,7 +10,7 @@ body {
 }
 
 .elemBox {
-    /* display: flex; */
+    display: flex;
 }
 
 .date,
@@ -32,7 +32,7 @@ body {
     grid-area: weather;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    /* grid-template-areas: "date date" "weather weather"; */
+    grid-template-areas: "date date" "weather weather";
 }
 
 .bussBox {
@@ -40,7 +40,7 @@ body {
 }
 
 .elem {
-    /* margin: 5px; */
+    margin: 5px;
     display: flex;
     align-items: center;
 }
@@ -62,4 +62,69 @@ body {
 
 .elem {
     margin: 3px;
+} */
+
+.calendarGrid {
+    display: grid;
+    grid-template-columns: repeat(7, auto);
+}
+
+.divider {
+    grid-column: 1 / span 7;
+}
+
+.row {
+    margin-bottom: 5px;
+}
+
+.start1 {
+    grid-column-start: 1;
+}
+
+.start2 {
+    grid-column-start: 2;
+}
+
+.start3 {
+    grid-column-start: 3;
+}
+
+.start4 {
+    grid-column-start: 4;
+}
+
+.start5 {
+    grid-column-start: 5;
+}
+
+.start6 {
+    grid-column-start: 6;
+}
+
+.start7 {
+    grid-column-start: 7;
+}
+
+.span2 {
+    grid-column-end: span 2;
+}
+
+.span3 {
+    grid-column-end: span 3;
+}
+
+.span4 {
+    grid-column-end: span 4;
+}
+
+.span5 {
+    grid-column-end: span 5;
+}
+
+.span6 {
+    grid-column-end: span 6;
+}
+
+.span7 {
+    grid-column-end: span 7;
 }

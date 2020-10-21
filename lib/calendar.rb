@@ -11,6 +11,7 @@ class Calendar
         # created automatically when the authorization flow completes for the first
         # time.
         @token_path = "google/token_#{account}.yaml".freeze
+        @account = account
         
         init_api()
     end
@@ -61,6 +62,7 @@ class Calendar
         year = date_time.year
 
         start_date = DateTime.new(year, month, day)
+        p num_days
         end_date = start_date + num_days
         [start_date, end_date]
     end
@@ -125,33 +127,40 @@ class CalendarHandler
         end
     end
 
-    def self.format(events, days)
-        events = events.map {|event| {summary: event.summary, start_time: event.start.date_time || event.start.date, end_time: event.end.date_time || event.end}}
+    def self.format(events)
+        events = events.map {|event| {summary: event.summary, start_time: event.start.date_time || event.start.date, end_time: event.end.date_time || event.end.date}}
         # days.each {|day| day[:events] = events.select {|event| day[:date] == event[:start_time].strftime("%Y-%m-%d")}}
-        events.each do
+        # events.each do
             
-        end
+        # end
     end
 
-    def self.create_event_box(num_days)
-        days = []
-        num_days.times do |i|
-            time = Time.now + (60*60*24*i)
-            days << {date: time.strftime("%Y-%m-%d"), events: []}
-        end
-        days
+    # def self.create_event_box(num_days)
+    #     days = []
+    #     num_days.times do |i|
+    #         time = Time.now + (60*60*24*i)
+    #         days << {date: time.strftime("%Y-%m-%d"), events: []}
+    #     end
+    #     days
+    # end
+
+    #   returns the default params for the get function
+    def self.get_default_params()
+        {calendars_to_get: {jojac: ["primary", "sv.swedish#holiday@group.v.calendar.google.com"], te4: ["ga.ntig.se_classroom871f8384@group.calendar.google.com"]}, num_days: 5}
     end
 
-    def self.get(calendars_to_get = {jojac: ["primary"], te4: ["ga.ntig.se_classroom871f8384@group.calendar.google.com"]}, num_days = 5)
+    def self.get(params = get_default_params())
+        calendars_to_get = params[:calendars_to_get] ||get_default_params()[:calendars_to_get]
+        num_days = params[:num_days] || 5
+    
         calendars = []
         calendars_to_get.keys.each do |c| 
             calendars_to_get[c].each { |id| calendars << Calendar.new(c.to_s).get_events(id, num_days) } 
         end
-        days = create_event_box(num_days)
+        # days = create_event_box(num_days)
         events = merge_calendars(calendars)
         events = sort_events(events)
-        events = format(events, days)
-        # p events[0]
+        events = format(events)
         
         events
     end

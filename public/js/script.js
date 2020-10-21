@@ -1,7 +1,10 @@
+const refreshTime = 3
+
 async function renderDataBoxes() {
 
     await renderBussDataBox()
     await renderWeatherDataBox()
+    await renderCalendarDataBox()
 
     await renderData()
 }
@@ -9,25 +12,25 @@ async function renderDataBoxes() {
 async function renderData() {
     renderBussData()
     renderWeatherData()
+    renderCalendarData()
 
     startRefreshCountdown()
 }
 
 function clearData() {
-    document.querySelector(".container").querySelectorAll('*:not(template)').forEach(n => n.remove());
+    document.querySelector(".dataContainer").querySelectorAll('*:not(template)').forEach(n => n.remove());
 }
 
-function startRefreshCountdown() { setTimeout(function() { renderData() }, 1000 * 60 * 3) }
+function startRefreshCountdown() { setTimeout(function() { renderData() }, 1000 * 60 * refreshTime) }
 
 async function renderBussDataBox() {
     const response = await fetch(`http://localhost:9292/api/busses`)
     const result = await (response.json())
 
-    const template = document.querySelector('#cardTemplate')
+    const template = document.querySelector('#bussCardTemplate')
     const bussBox = template.content.cloneNode(true).querySelector('.card')
     bussBox.classList.add("bussBox")
 
-    bussBox.querySelector(".card-title").innerHTML = "Bussar"
     busses = bussBox.querySelector(".card-content")
 
     for (const element of result) {
@@ -36,7 +39,7 @@ async function renderBussDataBox() {
         busses.appendChild(buss)
     }
     bussBox.appendChild(busses)
-    document.querySelector(".container").appendChild(bussBox)
+    document.querySelector(".dataContainer").appendChild(bussBox)
 }
 
 async function renderBussData() {
@@ -61,11 +64,10 @@ async function renderWeatherDataBox() {
     const template = document.querySelector('#weatherBoxTemplate')
     const weatherBox = template.content.cloneNode(true).querySelector('.card')
     weatherBox.classList.add("weatherBox")
-    weatherBox.querySelector(".card-title").innerHTML = "Väder"
 
     day = result[1]
     for (let i = 0; i < result.length; i++) {
-        const template = document.querySelector('#cardTemplate')
+        const template = document.querySelector('#weatherCardTemplate')
         const dayWeatherBox = template.content.cloneNode(true).querySelector('.card')
         dayWeatherBox.classList.add("dayWeather")
 
@@ -89,9 +91,9 @@ async function renderWeatherDataBox() {
 
             dayWeather.appendChild(weather)
         }
-        weatherBox.querySelector(".card-content").appendChild(dayWeatherBox)
+        weatherBox.querySelector(".row").appendChild(dayWeatherBox)
     }
-    container = document.querySelector(".container")
+    container = document.querySelector(".dataContainer")
     container.appendChild(weatherBox)
 }
 
@@ -106,7 +108,6 @@ async function renderWeatherData() {
         dayWeatherBox = dayWeatherBoxes[i]
         dayData = result[i]
 
-        // dayWeatherBox.querySelector(".card-title").innerHTML = day["date"]
         dayWeather = dayWeatherBox.querySelector(".card-content")
 
         for (const element of dayData["times"]) {
@@ -121,4 +122,66 @@ async function renderWeatherData() {
 
 
     }
+}
+
+async function renderCalendarDataBox() {
+
+    const template = document.querySelector('#calendarBoxTemplate')
+    const calendarBox = template.content.cloneNode(true).querySelector('.card')
+
+    container = document.querySelector(".dataContainer")
+
+
+
+    container.appendChild(calendarBox)
+}
+
+function renderCalendarDates(calendarGrid, numDays, weekDays) {
+    currentDate = new Date()
+    for (let i = 0; i < numDays; i++) {
+        day = currentDate.getDay()
+        date = currentDate.getDate()
+
+        dateHeader = document.createElement("div")
+        dateHeader.classList.add("dateHeader", "center-align")
+        dateHeader.innerHTML = `${date} ${weekDays[day]}`
+        calendarGrid.appendChild(dateHeader)
+
+        currentDate.setDate(currentDate.getDate() + 1)
+    }
+
+    divider = document.createElement("div")
+    divider.classList.add("divider")
+    calendarGrid.appendChild(divider)
+}
+
+//  adds start grid column and number of columns to span to the params of the event
+function getStartAndSpan(event) {
+    currentDate = new Date()
+
+
+}
+
+async function renderCalendarData() {
+    let weekDays = ["Söndag", "Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag"]
+    let numDays = 7
+    const response = await fetch(`http://localhost:9292/api/calendar/${numDays}`)
+    const result = await (response.json())
+
+    calendar = document.querySelector(".calendar")
+
+    calendarGrid = calendar.querySelector(".calendarGrid")
+    calendarGrid.innerHTML = ""
+    renderCalendarDates(calendarGrid, numDays, weekDays)
+
+
+
+    for (const event of result) {
+        console.log(event)
+
+        getStartAndSpan(event)
+
+    }
+
+
 }
