@@ -66,11 +66,11 @@
 
 .calendarGrid {
     display: grid;
-    grid-template-columns: repeat(7, auto);
+    grid-template-columns: repeat(7, 1fr);
 }
 
 .divider {
-    grid-column: 1 / span 7;
+    grid-column: 1 / end 7;
 }
 
 .row {
@@ -105,26 +105,30 @@
     grid-column-start: 7;
 }
 
-.span2 {
-    grid-column-end: span 2;
+.end1 {
+    grid-column-end: 1;
 }
 
-.span3 {
-    grid-column-end: span 3;
+.end2 {
+    grid-column-end: 2;
 }
 
-.span4 {
-    grid-column-end: span 4;
+.end3 {
+    grid-column-end: 3;
 }
 
-.span5 {
-    grid-column-end: span 5;
+.end4 {
+    grid-column-end: 4;
 }
 
-.span6 {
-    grid-column-end: span 6;
+.end5 {
+    grid-column-end: 5;
 }
 
-.span7 {
-    grid-column-end: span 7;
+.end6 {
+    grid-column-end: 6;
+}
+
+.end7 {
+    grid-column-end: 7;
 }

@@ -87,8 +87,6 @@ async function renderWeatherDataBox() {
             weather.classList.add(`time_${element["dateTime"].slice(0, -3).replace(" ", "")}`)
             weather.setAttribute("time", element["dateTime"])
 
-
-
             dayWeather.appendChild(weather)
         }
         weatherBox.querySelector(".row").appendChild(dayWeatherBox)
@@ -125,14 +123,10 @@ async function renderWeatherData() {
 }
 
 async function renderCalendarDataBox() {
-
     const template = document.querySelector('#calendarBoxTemplate')
     const calendarBox = template.content.cloneNode(true).querySelector('.card')
 
     container = document.querySelector(".dataContainer")
-
-
-
     container.appendChild(calendarBox)
 }
 
@@ -156,10 +150,39 @@ function renderCalendarDates(calendarGrid, numDays, weekDays) {
 }
 
 //  adds start grid column and number of columns to span to the params of the event
-function getStartAndSpan(event) {
+function getStartAndSpan(event, numDays) {
+    let months = []
     currentDate = new Date()
 
+    for (let i = 1; i <= numDays; i++) {
+        date = currentDate.getDate()
+        month = currentDate.getMonth() + 1
+        year = currentDate.getFullYear()
+        dateString = `${year}-${month}-${date}`
 
+        if (dateString == event["start_time"].slice(0, 10)) { event["start_column"] = i }
+        if (dateString == event["end_time"].slice(0, 10)) { event["end_column"] = i }
+
+        currentDate.setDate(currentDate.getDate() + 1)
+    }
+    return event
+}
+
+function createEventBox(event) {
+    const template = document.querySelector('#eventBoxTemplate')
+    const eventBox = template.content.cloneNode(true).querySelector('.eventBox')
+
+    eventBox.classList.add(`start${event["start_column"]}`)
+    eventBox.classList.add(`end${event["end_column"]}`)
+
+    eventBox.querySelector(".summary").innerHTML = event["summary"]
+
+    if (event["start_time"].length > 10) {
+        eventBox.querySelector(".time").innerHTML = `${event["start_time"].slice(12, 16)} - ${event["end_time"].slice(12, 16)}`
+    } else {
+        eventBox.querySelector(".time").innerHTML = "hela dagen"
+    }
+    return eventBox
 }
 
 async function renderCalendarData() {
@@ -175,12 +198,14 @@ async function renderCalendarData() {
     renderCalendarDates(calendarGrid, numDays, weekDays)
 
 
-
-    for (const event of result) {
+    for (let event of result) {
+        // console.log(event)
+        event = getStartAndSpan(event, numDays)
         console.log(event)
 
-        getStartAndSpan(event)
+        eventBox = createEventBox(event)
 
+        calendarGrid.appendChild(eventBox)
     }
 
 
