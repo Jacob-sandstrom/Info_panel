@@ -27,9 +27,9 @@ async function renderBussDataBox() {
     const response = await fetch(`http://localhost:9292/api/busses`)
     const result = await (response.json())
 
-    const template = document.querySelector('#bussCardTemplate')
+    const template = document.querySelector('#bussBoxTemplate')
     const bussBox = template.content.cloneNode(true).querySelector('.card')
-    bussBox.classList.add("bussBox")
+        // bussBox.classList.add("bussBox")
 
     busses = bussBox.querySelector(".card-content")
 
@@ -63,7 +63,7 @@ async function renderWeatherDataBox() {
 
     const template = document.querySelector('#weatherBoxTemplate')
     const weatherBox = template.content.cloneNode(true).querySelector('.card')
-    weatherBox.classList.add("weatherBox")
+        // weatherBox.classList.add("weatherBox")
 
     day = result[1]
     for (let i = 0; i < result.length; i++) {
@@ -130,7 +130,7 @@ async function renderCalendarDataBox() {
     container.appendChild(calendarBox)
 }
 
-function renderCalendarDates(calendarGrid, numDays, weekDays) {
+async function renderCalendarDates(calendarGrid, numDays, weekDays) {
     currentDate = new Date()
     for (let i = 0; i < numDays; i++) {
         day = currentDate.getDay()
@@ -160,8 +160,21 @@ function getStartAndSpan(event, numDays) {
         year = currentDate.getFullYear()
         dateString = `${year}-${month}-${date}`
 
-        if (dateString == event["start_time"].slice(0, 10)) { event["start_column"] = i }
-        if (dateString == event["end_time"].slice(0, 10)) { event["end_column"] = i }
+        console.log(currentDate.getTime())
+        console.log(Date.parse(event["start_time"]))
+
+        if (dateString == event["start_time"].slice(0, 10) || (currentDate.getTime() > Date.parse(event["start_time"]) && i == 1)) { event["start_column"] = i }
+
+        // if (end_time.length == 10 || time == 00:00)
+        if (dateString == event["end_time"].slice(0, 10)) {
+            if (event["end_time"].length == 10 || event["end_time"].slice(11, 16) == "00:00") {
+                event["span_column"] = i - event["start_column"]
+            } else {
+                event["span_column"] = i - event["start_column"] + 1
+            }
+        } else if (currentDate.getTime() < Date.parse(event["end_time"]) && i == numDays) {
+            event["span_column"] = i - event["start_column"] + 1
+        }
 
         currentDate.setDate(currentDate.getDate() + 1)
     }
@@ -173,14 +186,14 @@ function createEventBox(event) {
     const eventBox = template.content.cloneNode(true).querySelector('.eventBox')
 
     eventBox.classList.add(`start${event["start_column"]}`)
-    eventBox.classList.add(`end${event["end_column"]}`)
+    eventBox.classList.add(`span${event["span_column"]}`)
 
     eventBox.querySelector(".summary").innerHTML = event["summary"]
 
     if (event["start_time"].length > 10) {
-        eventBox.querySelector(".time").innerHTML = `${event["start_time"].slice(12, 16)} - ${event["end_time"].slice(12, 16)}`
+        eventBox.querySelector(".time").innerHTML = `${event["start_time"].slice(11, 16)} - ${event["end_time"].slice(11, 16)}`
     } else {
-        eventBox.querySelector(".time").innerHTML = "hela dagen"
+        // eventBox.querySelector(".time").innerHTML = "hela dagen"
     }
     return eventBox
 }
@@ -191,7 +204,7 @@ async function renderCalendarData() {
     const response = await fetch(`http://localhost:9292/api/calendar/${numDays}`)
     const result = await (response.json())
 
-    calendar = document.querySelector(".calendar")
+    calendar = document.querySelector(".calendarBox")
 
     calendarGrid = calendar.querySelector(".calendarGrid")
     calendarGrid.innerHTML = ""

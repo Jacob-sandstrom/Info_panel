@@ -62,8 +62,8 @@ class Calendar
         year = date_time.year
 
         start_date = DateTime.new(year, month, day)
-        p num_days
-        end_date = start_date + num_days
+        end_date = start_date + num_days - 0.05
+        p end_date
         [start_date, end_date]
     end
 
@@ -79,13 +79,6 @@ class Calendar
                                     time_min:      start_date.rfc3339,
                                     time_max:      end_date.rfc3339
                                     )
-
-        # puts "Upcoming events:"
-        # puts "No upcoming events found" if response.items.empty?
-        # response.items.each do |event|
-        #     start = event.start.date || event.start.date_time
-        #     puts "- #{event.summary} (#{start})"
-        # end
         
         return response
     end
@@ -100,11 +93,8 @@ class CalendarHandler
         if event.start.date == nil
             event.start.date_time = event.start.date_time.new_offset('+02:00')
             event.end.date_time = event.end.date_time.new_offset('+02:00')
-        else
-            # event.start.date = event.start.date.new_offset('+02:00')
-            # event.end.date = event.end.date.new_offset('+02:00')
         end
-        return event
+        event
     end
     
     def self.sort_events(events)
@@ -129,20 +119,7 @@ class CalendarHandler
 
     def self.format(events)
         events = events.map {|event| {summary: event.summary, start_time: event.start.date_time || event.start.date, end_time: event.end.date_time || event.end.date}}
-        # days.each {|day| day[:events] = events.select {|event| day[:date] == event[:start_time].strftime("%Y-%m-%d")}}
-        # events.each do
-            
-        # end
     end
-
-    # def self.create_event_box(num_days)
-    #     days = []
-    #     num_days.times do |i|
-    #         time = Time.now + (60*60*24*i)
-    #         days << {date: time.strftime("%Y-%m-%d"), events: []}
-    #     end
-    #     days
-    # end
 
     #   returns the default params for the get function
     def self.get_default_params()
@@ -151,13 +128,12 @@ class CalendarHandler
 
     def self.get(params = get_default_params())
         calendars_to_get = params[:calendars_to_get] ||get_default_params()[:calendars_to_get]
-        num_days = params[:num_days] || 5
+        num_days = params[:num_days] ||get_default_params()[:num_days]
     
         calendars = []
         calendars_to_get.keys.each do |c| 
             calendars_to_get[c].each { |id| calendars << Calendar.new(c.to_s).get_events(id, num_days) } 
         end
-        # days = create_event_box(num_days)
         events = merge_calendars(calendars)
         events = sort_events(events)
         events = format(events)

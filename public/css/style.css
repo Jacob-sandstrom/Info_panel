@@ -64,9 +64,46 @@
     margin: 3px;
 } */
 
+.wrapper {
+    height: 100vh;
+    width: 100vw;
+}
+
+.dataContainer {
+    display: grid;
+    grid-template-areas: "buss weather" "news weather" "calendar calendar";
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+
+nav {
+    grid-area: header;
+}
+
+.bussBox {
+    grid-area: buss;
+}
+
+.weatherBox {
+    grid-area: weather;
+}
+
+.newsBox {
+    grid-area: news;
+}
+
+.calendarBox {
+    grid-area: calendar;
+}
+
+.card {
+    margin: 0;
+}
+
 .calendarGrid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
+    grid-auto-flow: dense;
 }
 
 .divider {
@@ -75,6 +112,16 @@
 
 .row {
     margin-bottom: 5px;
+}
+
+.eventBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    background-color: rgb(163, 162, 250);
+    border: white 1px solid;
 }
 
 .start1 {
@@ -105,30 +152,30 @@
     grid-column-start: 7;
 }
 
-.end1 {
-    grid-column-end: 1;
+.span1 {
+    grid-column-end: span 1;
 }
 
-.end2 {
-    grid-column-end: 2;
+.span2 {
+    grid-column-end: span 2;
 }
 
-.end3 {
-    grid-column-end: 3;
+.span3 {
+    grid-column-end: span 3;
 }
 
-.end4 {
-    grid-column-end: 4;
+.span4 {
+    grid-column-end: span 4;
 }
 
-.end5 {
-    grid-column-end: 5;
+.span5 {
+    grid-column-end: span 5;
 }
 
-.end6 {
-    grid-column-end: 6;
+.span6 {
+    grid-column-end: span 6;
 }
 
-.end7 {
-    grid-column-end: 7;
+.span7 {
+    grid-column-end: span 7;
 }
