@@ -71,13 +71,13 @@
 
 .dataContainer {
     display: grid;
-    grid-template-areas: "buss weather" "news weather" "calendar calendar";
+    grid-template-areas: "buss news" "weather news" "weather calendar";
     grid-template-columns: 1fr 2fr;
-    grid-template-rows: 1fr 1fr 1fr;
+    /* grid-template-rows: 1fr 2fr 1fr; */
 }
 
-nav {
-    grid-area: header;
+.card .card-content {
+    padding: 12px;
 }
 
 .bussBox {
@@ -86,6 +86,14 @@ nav {
 
 .weatherBox {
     grid-area: weather;
+}
+
+.weatherBox>.card-content {
+    padding: 12px 0 12px 0;
+}
+
+.weatherBox>.card-content>.card-title {
+    margin-left: 12px;
 }
 
 .newsBox {
