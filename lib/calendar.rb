@@ -11,6 +11,7 @@ class Calendar
         # created automatically when the authorization flow completes for the first
         # time.
         @token_path = "google/token_#{account}.yaml".freeze
+        @account = account
         
         init_api()
     end
@@ -54,21 +55,22 @@ class Calendar
 
 
     #   get start and end time
-    def start_end_date(days = 5)
+    def start_end_date(num_days)
         date_time = DateTime.now
         day = date_time.day
         month = date_time.month
         year = date_time.year
 
         start_date = DateTime.new(year, month, day)
-        end_date = start_date + days
+        end_date = start_date + num_days - 0.05
+        p end_date
         [start_date, end_date]
     end
 
 
     #   send request
-    def get_events(calendar_id = "primary", days = 50)
-        start_date, end_date = start_end_date(days)
+    def get_events(calendar_id = "primary", num_days = 5)
+        start_date, end_date = start_end_date(num_days)
 
         response = @service.list_events(calendar_id,
                                     max_results:   1000,
@@ -77,13 +79,6 @@ class Calendar
                                     time_min:      start_date.rfc3339,
                                     time_max:      end_date.rfc3339
                                     )
-
-        # puts "Upcoming events:"
-        # puts "No upcoming events found" if response.items.empty?
-        # response.items.each do |event|
-        #     start = event.start.date || event.start.date_time
-        #     puts "- #{event.summary} (#{start})"
-        # end
         
         return response
     end
@@ -98,11 +93,8 @@ class CalendarHandler
         if event.start.date == nil
             event.start.date_time = event.start.date_time.new_offset('+02:00')
             event.end.date_time = event.end.date_time.new_offset('+02:00')
-        else
-            # event.start.date = event.start.date.new_offset('+02:00')
-            # event.end.date = event.end.date.new_offset('+02:00')
         end
-        return event
+        event
     end
     
     def self.sort_events(events)
@@ -126,19 +118,25 @@ class CalendarHandler
     end
 
     def self.format(events)
-        events.map {|event| {summary: event.summary, start_time: event.start.date_time || event.start.date, end_time: event.end.date_time || event.end}}
+        events = events.map {|event| {summary: event.summary, start_time: event.start.date_time || event.start.date, end_time: event.end.date_time || event.end.date}}
     end
 
+    #   returns the default params for the get function
+    def self.get_default_params()
+        {calendars_to_get: {jojac: ["primary", "sv.swedish#holiday@group.v.calendar.google.com"], te4: ["ga.ntig.se_classroom871f8384@group.calendar.google.com"]}, num_days: 5}
+    end
 
-    def self.get(calendars_to_get = {jojac: ["primary"], te4: ["ga.ntig.se_classroom871f8384@group.calendar.google.com"]})
+    def self.get(params = get_default_params())
+        calendars_to_get = params[:calendars_to_get] ||get_default_params()[:calendars_to_get]
+        num_days = params[:num_days] ||get_default_params()[:num_days]
+    
         calendars = []
         calendars_to_get.keys.each do |c| 
-            calendars_to_get[c].each { |id| calendars << Calendar.new(c.to_s).get_events(id) } 
+            calendars_to_get[c].each { |id| calendars << Calendar.new(c.to_s).get_events(id, num_days) } 
         end
         events = merge_calendars(calendars)
         events = sort_events(events)
         events = format(events)
-        p events[0]
         
         events
     end

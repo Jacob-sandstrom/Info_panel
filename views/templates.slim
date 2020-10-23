@@ -16,29 +16,56 @@
 /         / img.windDirection.weatherElem.elem
 /         .gust.weatherElem.elem
 
-template id="cardTemplate"
-    .card.blue-grey
-        .card-content.white-text
-            .card-title.row 
+/ buss templates
+template id="bussBoxTemplate"
+    .bussBox.card.blue-grey
+        .card-content
+            .card-title Bussar
+            .divider
 
 template id="bussTemplate"
-    .buss.card.blue-grey.darken-3.row.valign-wrapper
-        .bussName.col.s6
-        .bussDepTime.col.s6
+    .buss
+        .row.valign-wrapper
+            .bussName.col.s6
+            .bussDepTime.col.s6
+        .divider
 
 
+/ weather templates
 template id="weatherBoxTemplate"
-    .card.blue-grey.lighten-3  
-        .card-content.white-text
-            .card-title
+    .weatherBox.card.blue-grey.lighten-1
+        .card-content
+            .card-title Väder
+            .row
 
+template id="weatherCardTemplate"
+    .card.blue-grey.col.s6
+        .card-content
+            .card-title
+            .divider
 
 template id="weatherTemplate"
-    .weather.card.blue-grey.darken-3
+    .weather
         .row.valign-wrapper
-            .time.col.s2
+            .time.col.s3
             .temperature.col.s2
             .weatherSymbol.col.s2
                 img
-            .windSpeed.col.s2
+            .windSpeed.col.s3
             .gust.col.s2
+        .divider
+
+/ calendar templates
+template id="calendarBoxTemplate"
+    .calendarBox.card.blue-grey
+        .card-content
+            .card-title kalender
+            .calendarGrid
+
+/ template id="dateHeader"
+/     .dateHeader.col.s2
+
+template id="eventBoxTemplate"
+    .eventBox
+        .summary
+        .time
