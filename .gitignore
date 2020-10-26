@@ -1,2 +1,4 @@
 token*
 node_modules
+gemfile.lock
+.env
