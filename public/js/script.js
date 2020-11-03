@@ -156,7 +156,10 @@ function getStartAndSpan(event, numDays) {
 
     for (let i = 1; i <= numDays; i++) {
         date = currentDate.getDate()
+        console.log(date)
+        if (date < 10) { date = `0${date}` }
         month = currentDate.getMonth() + 1
+        if (month < 10) { month = `0${month}` }
         year = currentDate.getFullYear()
         dateString = `${year}-${month}-${date}`
 
@@ -164,6 +167,9 @@ function getStartAndSpan(event, numDays) {
         console.log(Date.parse(event["start_time"]))
 
         if (dateString == event["start_time"].slice(0, 10) || (currentDate.getTime() > Date.parse(event["start_time"]) && i == 1)) { event["start_column"] = i }
+        console.log(dateString)
+        console.log(event["start_time"].slice(0, 10))
+            // console.log()
 
         // if (end_time.length == 10 || time == 00:00)
         if (dateString == event["end_time"].slice(0, 10)) {

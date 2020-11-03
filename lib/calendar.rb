@@ -91,8 +91,8 @@ class CalendarHandler
     #   updates the time of an event to be CEST
     def self.update_time(event)
         if event.start.date == nil
-            event.start.date_time = event.start.date_time.new_offset('+02:00')
-            event.end.date_time = event.end.date_time.new_offset('+02:00')
+            event.start.date_time = event.start.date_time.new_offset('+01:00')
+            event.end.date_time = event.end.date_time.new_offset('+01:00')
         end
         event
     end
