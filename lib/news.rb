@@ -5,6 +5,10 @@ class News
 
 
     def self.format(response)
+        response = JSON.parse(response)
+        response["articles"].each do |a| 
+            a["source"] = a["source"]["name"]
+        end
         response
     end
 

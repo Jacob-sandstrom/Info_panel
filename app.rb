@@ -19,7 +19,7 @@ class Server < Sinatra::Base
     end
 
     get '/api/news' do
-        News.get()
+        News.get().to_json
     end
 
 

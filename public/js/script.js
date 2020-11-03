@@ -5,6 +5,7 @@ async function renderDataBoxes() {
     await renderBussDataBox()
     await renderWeatherDataBox()
     await renderCalendarDataBox()
+    await renderNewsDataBox()
 
     await renderData()
 }
@@ -13,6 +14,7 @@ async function renderData() {
     renderBussData()
     renderWeatherData()
     renderCalendarData()
+    renderNewsData()
 
     startRefreshCountdown()
 }
@@ -221,5 +223,19 @@ async function renderCalendarData() {
         calendarGrid.appendChild(eventBox)
     }
 
+
+}
+
+
+async function renderNewsDataBox() {
+    const template = document.querySelector('#newsBoxTemplate')
+    const newsBox = template.content.cloneNode(true).querySelector('.newsBox')
+
+
+
+}
+
+
+async function renderNewsData() {
 
 }
