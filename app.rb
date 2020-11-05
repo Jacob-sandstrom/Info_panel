@@ -18,6 +18,10 @@ class Server < Sinatra::Base
         CalendarHandler.get({num_days: params["num_days"].to_i}).to_json
     end
 
+    get '/api/news' do
+        News.get().to_json
+    end
+
 
 
   end

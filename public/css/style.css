@@ -70,6 +70,8 @@
 }
 
 .dataContainer {
+    height: 100%;
+    width: 100%;
     display: grid;
     grid-template-areas: "buss news" "weather news" "weather calendar";
     grid-template-columns: 1fr 2fr;
@@ -130,6 +132,15 @@
     padding: 5px;
     background-color: rgb(163, 162, 250);
     border: white 1px solid;
+}
+
+.news {
+    border: solid white 1px;
+    height: 100%;
+}
+
+.newsBox {
+    overflow: hidden;
 }
 
 .start1 {
