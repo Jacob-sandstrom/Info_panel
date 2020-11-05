@@ -1,3 +1,5 @@
+// const { forEach } = require("lodash")
+
 const refreshTime = 3
 
 async function renderDataBoxes() {
@@ -231,11 +233,29 @@ async function renderNewsDataBox() {
     const template = document.querySelector('#newsBoxTemplate')
     const newsBox = template.content.cloneNode(true).querySelector('.newsBox')
 
-
+    document.querySelector(".dataContainer").appendChild(newsBox)
 
 }
 
 
 async function renderNewsData() {
+
+    const response = await fetch(`http://localhost:9292/api/news`)
+    const result = await (response.json())
+
+    newsBox = document.querySelector(".newsBox")
+
+    for (const article of result["articles"]) {
+        const template = document.querySelector('#newsTemplate')
+        const news = template.content.cloneNode(true).querySelector('.news')
+
+        news.querySelector(".title").innerHTML = article["title"]
+        news.querySelector(".description").innerHTML = article["description"]
+            // news.querySelector(".datetime").innerHTML = article["publishedAt"]
+            // news.querySelector(".source").innerHTML = article["source"]
+
+        newsBox.querySelector(".row").appendChild(news)
+    }
+
 
 }
