@@ -98,6 +98,16 @@
     margin-left: 12px;
 }
 
+.weatherSymbol {
+    display: flex;
+    align-items: center;
+}
+
+.weather {
+    /* min-height: 34px; */
+    margin-top: 3px;
+}
+
 .newsBox {
     grid-area: news;
 }
