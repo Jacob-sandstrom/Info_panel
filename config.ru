@@ -1,5 +1,7 @@
 require 'bundler'
 
+require 'base64'
+
 Bundler.require
 
 Dotenv.load

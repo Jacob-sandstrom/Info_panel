@@ -28,7 +28,7 @@ function clearData() {
 function startRefreshCountdown() { setTimeout(function() { renderData() }, 1000 * 60 * refreshTime) }
 
 async function renderBussDataBox() {
-    const response = await fetch(`http://localhost:9292/api/busses`)
+    const response = await fetch(`/api/busses`)
     const result = await (response.json())
 
     const template = document.querySelector('#bussBoxTemplate')
@@ -47,7 +47,7 @@ async function renderBussDataBox() {
 }
 
 async function renderBussData() {
-    const response = await fetch(`http://localhost:9292/api/busses`)
+    const response = await fetch(`/api/busses`)
     const result = await (response.json())
 
     bussBox = document.querySelector(".bussBox")
@@ -62,7 +62,7 @@ async function renderBussData() {
 }
 
 async function renderWeatherDataBox() {
-    const response = await fetch(`http://localhost:9292/api/weather`)
+    const response = await fetch(`/api/weather`)
     const result = await (response.json())
 
     const template = document.querySelector('#weatherBoxTemplate')
@@ -100,7 +100,7 @@ async function renderWeatherDataBox() {
 }
 
 async function renderWeatherData() {
-    const response = await fetch(`http://localhost:9292/api/weather`)
+    const response = await fetch(`/api/weather`)
     const result = await (response.json())
 
     weatherBox = document.querySelector(".weatherBox")
@@ -211,7 +211,7 @@ function createEventBox(event) {
 async function renderCalendarData() {
     let weekDays = ["Söndag", "Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag"]
     let numDays = 7
-    const response = await fetch(`http://localhost:9292/api/calendar/${numDays}`)
+    const response = await fetch(`/api/calendar/${numDays}`)
     const result = await (response.json())
 
     calendar = document.querySelector(".calendarBox")
@@ -246,22 +246,25 @@ async function renderNewsDataBox() {
 
 async function renderNewsData() {
 
-    const response = await fetch(`http://localhost:9292/api/news`)
-    const result = await (response.json())
 
     newsBox = document.querySelector(".newsBox")
 
-    for (const article of result["articles"]) {
-        const template = document.querySelector('#newsTemplate')
-        const news = template.content.cloneNode(true).querySelector('.news')
+    cards = newsBox.querySelectorAll(".card")
 
-        news.querySelector(".title").innerHTML = article["title"]
-        news.querySelector(".description").innerHTML = article["description"]
-            // news.querySelector(".datetime").innerHTML = article["publishedAt"]
-            // news.querySelector(".source").innerHTML = article["source"]
+    for (const card of cards) {
+        const response = await fetch(`/api/news/?limit=7&subreddit=${card.id}`)
+        const result = await (response.json())
 
-        newsBox.querySelector(".row").appendChild(news)
+        for (const post of result) {
+            const template = document.querySelector('#newsTemplate')
+            const news = template.content.cloneNode(true).querySelector('.news')
+
+            news.querySelector(".title").innerHTML = post
+
+            card.querySelector(".items").appendChild(news)
+        }
     }
+
 
 
 }
