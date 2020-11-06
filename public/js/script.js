@@ -160,20 +160,14 @@ function getStartAndSpan(event, numDays) {
 
     for (let i = 1; i <= numDays; i++) {
         date = currentDate.getDate()
-        console.log(date)
         if (date < 10) { date = `0${date}` }
         month = currentDate.getMonth() + 1
         if (month < 10) { month = `0${month}` }
         year = currentDate.getFullYear()
         dateString = `${year}-${month}-${date}`
 
-        console.log(currentDate.getTime())
-        console.log(Date.parse(event["start_time"]))
 
         if (dateString == event["start_time"].slice(0, 10) || (currentDate.getTime() > Date.parse(event["start_time"]) && i == 1)) { event["start_column"] = i }
-        console.log(dateString)
-        console.log(event["start_time"].slice(0, 10))
-            // console.log()
 
         // if (end_time.length == 10 || time == 00:00)
         if (dateString == event["end_time"].slice(0, 10)) {
@@ -222,9 +216,7 @@ async function renderCalendarData() {
 
 
     for (let event of result) {
-        // console.log(event)
         event = getStartAndSpan(event, numDays)
-        console.log(event)
 
         eventBox = createEventBox(event)
 
@@ -249,19 +241,21 @@ async function renderNewsData() {
 
     newsBox = document.querySelector(".newsBox")
 
-    cards = newsBox.querySelectorAll(".card")
+    cards = newsBox.querySelectorAll(".category")
 
     for (const card of cards) {
         const response = await fetch(`/api/news/?limit=7&subreddit=${card.id}`)
         const result = await (response.json())
 
+        items = card.querySelector(".items")
+        items.innerHTML = ""
         for (const post of result) {
             const template = document.querySelector('#newsTemplate')
             const news = template.content.cloneNode(true).querySelector('.news')
 
             news.querySelector(".title").innerHTML = post
 
-            card.querySelector(".items").appendChild(news)
+            items.appendChild(news)
         }
     }
 

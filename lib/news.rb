@@ -5,6 +5,7 @@ class News
 
 
     def self.format(response)
+        p response["data"].class
         response["data"]["children"].map {|post| post["data"]["title"] } 
     end
 
