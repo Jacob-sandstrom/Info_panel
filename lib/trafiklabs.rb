@@ -51,7 +51,7 @@ class Trafiklabs
 
     # sends the api request and return n journeys formated with format(response)
     def self.get(max_journeys = 5, destination = 740015597)
-        response = HTTParty.get("https://api.resrobot.se/v2/departureBoard?key=#{ENV["trafiklabs_key"]}&direction=#{destination}&maxJourneys=#{max_journeys}&format=json")
+        response = HTTParty.get("https://api.resrobot.se/v2/departureBoard?key=#{ENV["trafiklabs_key"]}&id=740015681&direction=#{destination}&maxJourneys=#{max_journeys}&format=json")
         return format(response)
     end
 
