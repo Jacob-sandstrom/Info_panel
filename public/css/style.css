@@ -134,13 +134,32 @@
     border: white 1px solid;
 }
 
+.newsBox {}
+
+.items {
+    display: flex;
+    flex-direction: column;
+}
+
 .news {
-    border: solid white 1px;
+    /* border: solid white 1px; */
     height: 100%;
 }
 
 .newsBox {
     overflow: hidden;
+}
+
+.card {
+    box-shadow: none;
+}
+
+.title {
+    /* margin: 0; */
+}
+
+.news.card .card-content {
+    padding: 2px 0;
 }
 
 .start1 {

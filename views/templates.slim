@@ -33,7 +33,7 @@ template id="bussTemplate"
 
 / weather templates
 template id="weatherBoxTemplate"
-    .weatherBox.card.blue-grey.lighten-1
+    .weatherBox.card.blue-grey
         .card-content
             .card-title Väder
             .row
@@ -72,16 +72,17 @@ template id="eventBoxTemplate"
 
 
 template id="newsBoxTemplate"
-    .newsBox.card.blue-grey
-        .card-content
-            / .card-title Nyheter
-            .row
-
+    .newsBox.blue-grey.row
+        .card#news.blue-grey.col.s6
+            .card-content
+                .card-title News
+                .items
+        .card#technology.blue-grey.col.s6
+            .card-content
+                .card-title Tech news
+                .items
 
 template id="newsTemplate"
-    .news.card.blue-grey.col.s6
+    .news.card.blue-grey
         .card-content
-            .card-title.title
-            p.description
-            / .datetime
-            / .source
+            h6.title
