@@ -123,6 +123,7 @@ class CalendarHandler
 
     #   returns the default params for the get function
     def self.get_default_params()
+        #   keys in calendars_to_get serves as a unique identifier for api credentials matching that account
         {calendars_to_get: {jojac: ["primary", "sv.swedish#holiday@group.v.calendar.google.com"], te4: ["ga.ntig.se_classroom871f8384@group.calendar.google.com"]}, num_days: 5}
     end
 
