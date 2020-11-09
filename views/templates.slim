@@ -1,0 +1,88 @@
+
+
+/ template id="bussTemplate"
+/     .buss.elemBox
+/         .bussName.bussElem.elem
+/         .bussDepTime.bussElem.elem
+
+
+/ template id="weatherTemplate"
+/     .weather.elemBox
+/         .time.weatherElem.elem
+/         .temperature.weatherElem.elem
+/         .weatherSymbol.weatherElem.elem
+/             img
+/         .windSpeed.weatherElem.elem
+/         / img.windDirection.weatherElem.elem
+/         .gust.weatherElem.elem
+
+/ buss templates
+template id="bussBoxTemplate"
+    .bussBox.card.blue-grey
+        .card-content
+            .card-title Bussar
+            .divider
+
+template id="bussTemplate"
+    .buss
+        .row.valign-wrapper
+            .bussName.col.s6
+            .bussDepTime.col.s6
+        .divider
+
+
+/ weather templates
+template id="weatherBoxTemplate"
+    .weatherBox.card.blue-grey
+        .card-content
+            .card-title Väder
+            .row
+
+template id="weatherCardTemplate"
+    .card.blue-grey
+        .card-content
+            .card-title
+            .divider
+
+template id="weatherTemplate"
+    .weather
+        .row.valign-wrapper
+            .time.col.s3
+            .temperature.col.s2
+            .weatherSymbol.col.s2
+                img
+            .windSpeed.col.s3
+            .gust.col.s2
+        .divider
+
+/ calendar templates
+template id="calendarBoxTemplate"
+    .calendarBox.card.blue-grey
+        .card-content
+            .card-title kalender
+            .calendarGrid
+
+/ template id="dateHeader"
+/     .dateHeader.col.s2
+
+template id="eventBoxTemplate"
+    .eventBox
+        .summary
+        .time
+
+
+template id="newsBoxTemplate"
+    .newsBox.blue-grey.row
+        .card.category#news.blue-grey.col.s6
+            .card-content
+                .card-title News
+                .items
+        .card.category#technology.blue-grey.col.s6
+            .card-content
+                .card-title Tech news
+                .items
+
+template id="newsTemplate"
+    .news.card.blue-grey
+        .card-content
+            h6.title

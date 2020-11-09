@@ -1,0 +1,229 @@
+/* body {
+    background-color: rgb(42, 42, 42);
+    color: white;
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-areas: "head head" "buss weather";
+}
+
+.elemBox {
+    display: flex;
+}
+
+.date,
+.bussHeader {
+    margin: 5px;
+}
+
+.weather,
+.busses {
+    display: grid;
+    grid-auto-rows: 30px;
+}
+
+.box {
+    border: 2px solid white;
+}
+
+.weatherBox {
+    grid-area: weather;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "date date" "weather weather";
+}
+
+.bussBox {
+    grid-area: buss;
+}
+
+.elem {
+    margin: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.weatherElem {
+    justify-content: center;
+}
+
+.bussElem {}
+
+.weather {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.buss {
+    display: grid;
+    grid-template-columns: 50px auto;
+}
+
+.elem {
+    margin: 3px;
+} */
+
+.wrapper {
+    height: 100vh;
+    width: 100vw;
+}
+
+.dataContainer {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-areas: "buss news" "weather news" "weather calendar";
+    grid-template-columns: 1fr 2fr;
+    /* grid-template-rows: 1fr 2fr 1fr; */
+}
+
+.card .card-content {
+    padding: 12px;
+}
+
+.bussBox {
+    grid-area: buss;
+}
+
+.weatherBox {
+    grid-area: weather;
+}
+
+.weatherBox>.card-content {
+    padding: 12px 0 12px 0;
+}
+
+.weatherBox>.card-content>.card-title {
+    margin-left: 12px;
+}
+
+.weatherSymbol {
+    display: flex;
+    align-items: center;
+}
+
+.weather {
+    /* min-height: 34px; */
+    margin-top: 3px;
+}
+
+.newsBox {
+    grid-area: news;
+}
+
+.calendarBox {
+    grid-area: calendar;
+}
+
+.card {
+    margin: 0;
+}
+
+.calendarGrid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-auto-flow: dense;
+}
+
+.divider {
+    grid-column: 1 / end 7;
+}
+
+.row {
+    margin-bottom: 5px;
+}
+
+.eventBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    background-color: rgb(163, 162, 250);
+    border: white 1px solid;
+}
+
+.newsBox {}
+
+.items {
+    display: flex;
+    flex-direction: column;
+}
+
+.news {
+    /* border: solid white 1px; */
+    height: 100%;
+}
+
+.newsBox {
+    overflow: hidden;
+}
+
+.card {
+    box-shadow: none;
+}
+
+.title {
+    /* margin: 0; */
+}
+
+.news.card .card-content {
+    padding: 2px 0;
+}
+
+.start1 {
+    grid-column-start: 1;
+}
+
+.start2 {
+    grid-column-start: 2;
+}
+
+.start3 {
+    grid-column-start: 3;
+}
+
+.start4 {
+    grid-column-start: 4;
+}
+
+.start5 {
+    grid-column-start: 5;
+}
+
+.start6 {
+    grid-column-start: 6;
+}
+
+.start7 {
+    grid-column-start: 7;
+}
+
+.span1 {
+    grid-column-end: span 1;
+}
+
+.span2 {
+    grid-column-end: span 2;
+}
+
+.span3 {
+    grid-column-end: span 3;
+}
+
+.span4 {
+    grid-column-end: span 4;
+}
+
+.span5 {
+    grid-column-end: span 5;
+}
+
+.span6 {
+    grid-column-end: span 6;
+}
+
+.span7 {
+    grid-column-end: span 7;
+}
