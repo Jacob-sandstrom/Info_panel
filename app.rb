@@ -1,7 +1,14 @@
 class Server < Sinatra::Base
+    
+    before do
+        headers "Access-Control-Allow-Origin" => "*",
+            "Access-Control-Allow-Methods" => "*",
+            "Access-Control-Allow-Headers" => "*"
+        
+    end
+    
     get '/' do
         slim :index
-      
     end
 
     
